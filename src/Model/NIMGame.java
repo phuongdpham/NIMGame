@@ -15,7 +15,8 @@ public class NIMGame {
     private int [] coc;
     private boolean result;  // true: computer win
     private int status;  // tong nim
-    private boolean turn; // true: computer's turn
+    public boolean turn; // true: computer's turn
+    public boolean finished; // true: game is finished
     
     private int MAXN = 3;
     private int MAXR = 20;
@@ -40,6 +41,7 @@ public class NIMGame {
             coc[i] = rand.nextInt(MAXR);
         }
         turn = false;
+        finished = false;
         updateStatus();
     }
     
@@ -102,8 +104,12 @@ public class NIMGame {
     public String getMessage() {
         return message;
     }
+        
+    public Integer getData(int i) {
+        return coc[i];
+    }
     
-    public boolean getTurn() {
-        return turn;
+    public void userEnter(int c, int number) {
+        coc[c] -= number;
     }
 }

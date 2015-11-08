@@ -29,6 +29,8 @@ public class Main extends javax.swing.JFrame {
     
     private void initGame() {
         game = new NIMGame();
+        
+        disableAll(); // khong dc boc
     }
 
     /**
@@ -40,24 +42,49 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        aboutBT = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        coc1TF = new javax.swing.JTextField();
         coc1LB = new javax.swing.JLabel();
         coc2LB = new javax.swing.JLabel();
         coc3LB = new javax.swing.JLabel();
-        coc1TF = new javax.swing.JTextField();
         coc2TF = new javax.swing.JTextField();
-        coc3TF = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        aboutBT = new javax.swing.JButton();
-        cancelBT = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         startBT = new javax.swing.JButton();
+        coc3TF = new javax.swing.JTextField();
+        cancelBT = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setFont(new java.awt.Font("Segoe Script", 1, 72)); // NOI18N
         jLabel1.setText("NIM Game");
+
+        aboutBT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        aboutBT.setText("About");
+        aboutBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutBTActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 2, 15)); // NOI18N
+        jLabel2.setText("Số quân bốc:");
+
+        coc1TF.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        coc1TF.setText("0");
+        coc1TF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Coc1_KeyPressed(evt);
+            }
+        });
 
         coc1LB.setFont(new java.awt.Font("Trebuchet MS", 1, 96)); // NOI18N
         coc1LB.setText("0");
@@ -68,25 +95,27 @@ public class Main extends javax.swing.JFrame {
         coc3LB.setFont(new java.awt.Font("Trebuchet MS", 1, 96)); // NOI18N
         coc3LB.setText("0");
 
-        coc1TF.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        coc1TF.setText("0");
-        coc1TF.addKeyListener(new java.awt.event.KeyAdapter() {
+        coc2TF.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        coc2TF.setText("0");
+        coc2TF.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                Coc1_KeyPressed(evt);
+                Coc2_KeyPressed(evt);
             }
         });
 
-        coc2TF.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        coc2TF.setText("0");
+        startBT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        startBT.setText("Start");
+        startBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startBTActionPerformed(evt);
+            }
+        });
 
         coc3TF.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         coc3TF.setText("0");
-
-        aboutBT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        aboutBT.setText("About");
-        aboutBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aboutBTActionPerformed(evt);
+        coc3TF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                Coc3_KeyPressed(evt);
             }
         });
 
@@ -98,104 +127,118 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 2, 15)); // NOI18N
-        jLabel2.setText("Số quân bốc:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabel3.setText("Lượt: ");
 
-        startBT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        startBT.setText("Start");
-        startBT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startBTActionPerformed(evt);
-            }
-        });
+        jLabel4.setFont(new java.awt.Font("Tahoma", 2, 15)); // NOI18N
+        jLabel4.setText("Bạn");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(aboutBT))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(23, 23, 23)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(coc1LB, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                            .addComponent(coc1TF))
+                                        .addGap(114, 114, 114)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(coc2LB, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                            .addComponent(coc2TF))))))
+                        .addGap(102, 102, 102)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(startBT, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancelBT, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(coc3LB, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                    .addComponent(coc3TF))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(216, 216, 216)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(coc2LB)
+                    .addComponent(coc3LB)
+                    .addComponent(coc1LB))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(coc1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(coc3TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(coc2TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(aboutBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(startBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cancelBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(104, 104, 104))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(aboutBT))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(coc1LB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(coc1TF, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(81, 81, 81)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(coc2LB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(coc2TF, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(80, 80, 80)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(coc3LB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(coc3TF, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(126, 126, 126))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(startBT, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cancelBT)))))
-                        .addGap(25, 25, 25))))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(coc1LB)
-                    .addComponent(coc2LB)
-                    .addComponent(coc3LB))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(coc1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(coc2TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(coc3TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(startBT)
-                    .addComponent(aboutBT)
-                    .addComponent(cancelBT))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void aboutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBTActionPerformed
-        // TODO add your handling code here:
-        JDialog about = new About(this, true);
-        
-        about.setLocationRelativeTo(null);
-        about.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        about.setTitle("About");
-        about.setVisible(true);
-    }//GEN-LAST:event_aboutBTActionPerformed
-
     private void cancelBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBTActionPerformed
         // TODO add your handling code here:
         int response = JOptionPane.showConfirmDialog(
-                null, 
-                "Bạn có thực sự muốn thoát Game?", 
-                "Confirm",
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE);
-        
+            null,
+            "Bạn có thực sự muốn thoát Game?",
+            "Confirm",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
         if (response == JOptionPane.YES_OPTION) {
             this.dispose();
         }
@@ -203,11 +246,11 @@ public class Main extends javax.swing.JFrame {
 
     private void startBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBTActionPerformed
         // TODO add your handling code here:
+        
+        game.initGame();
+        bindingData();
+        
         if (game.started) {
-            coc1LB.setText("0");
-            coc2LB.setText("0");
-            coc3LB.setText("0");
-
             coc1TF.setText("0");
             coc2TF.setText("0");
             coc3TF.setText("0");
@@ -216,15 +259,129 @@ public class Main extends javax.swing.JFrame {
             startBT.setText("Restart");
         }
         
+        enableAll();
+
+        if (game.getData(0) == 0) {
+            coc1TF.disable();
+        }
+
+        if (game.getData(1) == 0) {
+            coc2TF.disable();
+        }
+
+        if (game.getData(2) == 0) {
+            coc3TF.disable();
+        }
+        
+        
     }//GEN-LAST:event_startBTActionPerformed
 
     private void Coc1_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc1_KeyPressed
         // TODO add your handling code here:
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+            String num = coc1TF.getText().trim();
+            int number;
+            try {
+                number = GetInt(num);
+                
+                if (number > game.getData(0)) {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!", 
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                } else {
+                    game.turn = true;
+                    game.userEnter(0, number);
+                    coc1LB.setText(game.getData(0).toString());
+                    if (game.getData(0) == 0) {
+                        coc1TF.disable();
+                    }
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Số bạn vừa nhập chưa đúng, xin mời nhập lại!", 
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_Coc1_KeyPressed
+
+    private void aboutBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutBTActionPerformed
+        // TODO add your handling code here:
+        JDialog about = new About(this, true);
+
+        about.setLocationRelativeTo(null);
+        about.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        about.setTitle("About");
+        about.setVisible(true);
+    }//GEN-LAST:event_aboutBTActionPerformed
+
+    private void Coc2_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc2_KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String num = coc2TF.getText().trim();
+            int number;
+            try {
+                number = GetInt(num);
+                
+                if (number > game.getData(1)) {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!", 
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                } else {
+                    game.turn = true;
+                    game.userEnter(1, number);
+                    coc2LB.setText(game.getData(1).toString());
+                    if (game.getData(1) == 0) {
+                        coc2TF.disable();
+                    }
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Số bạn vừa nhập chưa đúng, xin mời nhập lại!", 
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_Coc2_KeyPressed
+
+    private void Coc3_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc3_KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String num = coc3TF.getText().trim();
+            int number;
+            try {
+                number = GetInt(num);
+                
+                if (number > game.getData(2)) {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!", 
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                } else {
+                    game.turn = true;
+                    game.userEnter(2, number);
+                    coc3LB.setText(game.getData(2).toString());
+                    if (game.getData(2) == 0) {
+                        coc3TF.disable();
+                    }
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Số bạn vừa nhập chưa đúng, xin mời nhập lại!", 
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_Coc3_KeyPressed
 
     /**
      * @param args the command line arguments
@@ -242,15 +399,15 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | 
+                InstantiationException | 
+                IllegalAccessException | 
+                javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(
+                    Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
@@ -270,7 +427,32 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField coc3TF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton startBT;
     // End of variables declaration//GEN-END:variables
+
+    private void bindingData() {
+        coc1LB.setText(game.getData(0).toString());
+        coc2LB.setText(game.getData(1).toString());
+        coc3LB.setText(game.getData(2).toString());
+    }
+
+    private void disableAll() {
+        coc1TF.disable();
+        coc2TF.disable();
+        coc3TF.disable();
+    }
+
+    private void enableAll() {
+        coc1TF.enable();
+        coc2TF.enable();
+        coc3TF.enable();
+    }
+
+    private int GetInt(String num) throws NumberFormatException {
+        return Integer.parseInt(num);
+    }
 }
