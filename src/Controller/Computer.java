@@ -11,15 +11,18 @@ import Model.NIMGame;
  *
  * @author Ui
  */
-public class Computer extends Thread {
+public class Computer {
     private NIMGame game;
     
     public Computer(NIMGame g) {
         game = g;
     }
     
-    @Override
-    public void run() {
-        
+    public void process() {
+        game.pick();
+    }
+    
+    public String say() {
+        return game.getMessage();
     }
 }

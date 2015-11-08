@@ -5,23 +5,34 @@
  */
 package GUI;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Ui
  */
 public class Result extends javax.swing.JDialog {
-    java.awt.Frame parent;
+    public boolean isNewGame;
+    boolean res;
     
     /**
      * Creates new form About
      * @param parent
      * @param modal
      */
-    public Result(java.awt.Frame parent, boolean modal) {
+    public Result(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.parent = parent;
     }
+    
+    public Result(JFrame parent, boolean modal, boolean result) {
+        super(parent, modal);
+        initComponents();
+        res = result;
+        showResult();
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +61,11 @@ public class Result extends javax.swing.JDialog {
 
         newGameBT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         newGameBT.setText("New Game");
+        newGameBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newGameBTActionPerformed(evt);
+            }
+        });
 
         resultLB.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         resultLB.setText("You Win!");
@@ -59,21 +75,23 @@ public class Result extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(resultLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
                         .addComponent(newGameBT)
                         .addGap(30, 30, 30)
-                        .addComponent(exitBT, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(127, Short.MAX_VALUE))
+                        .addComponent(exitBT, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(resultLB, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addComponent(resultLB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newGameBT)
                     .addComponent(exitBT))
@@ -85,9 +103,15 @@ public class Result extends javax.swing.JDialog {
 
     private void exitBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBTActionPerformed
         // TODO add your handling code here:
-        
+        isNewGame = false;
         this.dispose();
     }//GEN-LAST:event_exitBTActionPerformed
+
+    private void newGameBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameBTActionPerformed
+        // TODO add your handling code here:
+        isNewGame = true;
+        dispose();
+    }//GEN-LAST:event_newGameBTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,4 +161,12 @@ public class Result extends javax.swing.JDialog {
     private javax.swing.JButton newGameBT;
     private javax.swing.JLabel resultLB;
     // End of variables declaration//GEN-END:variables
+
+    private void showResult() {
+        if (res) {
+            resultLB.setText("Computer Win!");
+        } else {
+            resultLB.setText("You Win!");
+        }
+    }
 }

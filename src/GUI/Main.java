@@ -5,18 +5,38 @@
  */
 package GUI;
 
+import Controller.Computer;
 import Model.NIMGame;
 import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
  * @author Ui
  */
 public class Main extends javax.swing.JFrame {
-    public boolean result = true;
+    public boolean ts;
     private NIMGame game;
+    private Computer com;
+    private StringBuffer mess = new StringBuffer();
+    
+    private DateFormat dateFormat;
+    private Calendar calendar;
+    
+    private Result result;
+    
+    private Timer t;
+    
+    private int tysoCom = 0;
+    private int tysoBan = 0;
 
     /**
      * Creates new form Main
@@ -24,11 +44,34 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        initTimer();
         initGame();
+    }
+    
+    private void initTimer() {
+        t = new Timer(1000, (ActionEvent e) -> {
+            showTime();
+        });
+    }
+    
+    private void showTime() {
+        calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR),
+                min = calendar.get(Calendar.MINUTE),
+                sec = calendar.get(Calendar.SECOND);
+        
+        clockLB.setText(hour + " : " + min + " : " + sec);
     }
     
     private void initGame() {
         game = new NIMGame();
+        com = new Computer(game);
+        
+        
+        dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
+        t.start();
         
         disableAll(); // khong dc boc
     }
@@ -55,8 +98,13 @@ public class Main extends javax.swing.JFrame {
         coc3TF = new javax.swing.JTextField();
         cancelBT = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        comsayTA = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        clockLB = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        tysoLB = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -67,7 +115,7 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setText("NIM Game");
 
         aboutBT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        aboutBT.setText("About");
+        aboutBT.setText("Hướng dẫn");
         aboutBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aboutBTActionPerformed(evt);
@@ -127,18 +175,30 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel3.setText("Lượt: ");
+        comsayTA.setEditable(false);
+        comsayTA.setColumns(20);
+        comsayTA.setFont(new java.awt.Font("Monospaced", 0, 15)); // NOI18N
+        comsayTA.setRows(5);
+        jScrollPane1.setViewportView(comsayTA);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 2, 15)); // NOI18N
-        jLabel4.setText("Bạn");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 2, 15)); // NOI18N
+        jLabel5.setText("Computer says:");
+
+        clockLB.setFont(new java.awt.Font("Tempus Sans ITC", 1, 15)); // NOI18N
+        clockLB.setText("Dong ho");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel3.setText("Tỷ số:");
+
+        tysoLB.setFont(new java.awt.Font("Viner Hand ITC", 1, 20)); // NOI18N
+        tysoLB.setText("0 - 0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -147,45 +207,59 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(clockLB, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(23, 23, 23)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(coc1LB, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                                             .addComponent(coc1TF))
-                                        .addGap(114, 114, 114)
+                                        .addGap(111, 111, 111)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(coc2LB, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                            .addComponent(coc2TF))))))
-                        .addGap(102, 102, 102)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(startBT, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cancelBT, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(coc3LB, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                                    .addComponent(coc3TF))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                            .addComponent(coc2TF)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tysoLB, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(111, 111, 111)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(coc3LB, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                            .addComponent(coc3TF)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)))
-                .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(216, 216, 216)
-                .addComponent(jLabel1)
+                        .addGap(216, 216, 216)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(startBT, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cancelBT, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator2))
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(clockLB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(tysoLB, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
@@ -193,26 +267,28 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(coc2LB)
                     .addComponent(coc3LB)
                     .addComponent(coc1LB))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(coc1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(coc2TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(coc3TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(aboutBT)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(coc1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(coc3TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(coc2TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(aboutBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(startBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cancelBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(startBT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cancelBT))
+                        .addGap(25, 25, 25)))
                 .addContainerGap())
         );
 
@@ -220,11 +296,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -244,21 +320,76 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cancelBTActionPerformed
 
+    private void Coc3_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc3_KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String num = coc3TF.getText().trim();
+            int number;
+            try {
+                number = GetInt(num);
+
+                if (number > game.getData(2)) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                } else {
+                    game.turn = true;
+                    game.userEnter(2, number);
+                    coc3LB.setText(game.getData(2).toString());
+                    if (game.getData(2) == 0) {
+                        coc3TF.disable();
+                    }
+                    
+                    if (game.isFinished()) {
+                        ts = false;
+                        showResult();
+                    }
+                    
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(500);
+                    } catch (InterruptedException ex) {
+                        
+                    }
+                    
+                    // Computer's turn
+                    com.process();
+                    ComputerSay();
+                    bindingData();
+                    
+                    if (game.isFinished()) {
+                        ts = true;
+                        showResult();
+                        return;
+                    }
+                    resetBocQuan();
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Số bạn vừa nhập chưa đúng, xin mời nhập lại!",
+                    "Lỗi",
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_Coc3_KeyPressed
+
     private void startBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBTActionPerformed
         // TODO add your handling code here:
-        
+
         game.initGame();
         bindingData();
-        
+
         if (game.started) {
-            coc1TF.setText("0");
-            coc2TF.setText("0");
-            coc3TF.setText("0");
+            resetBocQuan();
+            
+            comsayTA.setText("");
         } else {
             game.started = true;
             startBT.setText("Restart");
         }
-        
+
         enableAll();
 
         if (game.getData(0) == 0) {
@@ -273,8 +404,65 @@ public class Main extends javax.swing.JFrame {
             coc3TF.disable();
         }
         
-        
+        refresh();
+
     }//GEN-LAST:event_startBTActionPerformed
+
+    private void Coc2_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc2_KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String num = coc2TF.getText().trim();
+            int number;
+            try {
+                number = GetInt(num);
+
+                if (number > game.getData(1)) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!",
+                        "Lỗi",
+                        JOptionPane.WARNING_MESSAGE);
+                } else {
+                    game.turn = true;
+                    game.userEnter(1, number);
+                    coc2LB.setText(game.getData(1).toString());
+                    if (game.getData(1) == 0) {
+                        coc2TF.disable();
+                    }
+                    
+                    if (game.isFinished()) {
+                        ts = false;
+                        showResult();
+                        return;
+                    }
+                    
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(500);
+                    } catch (InterruptedException ex) {
+                        
+                    }
+                    
+                    // Computer's turn
+                    com.process();
+                    ComputerSay();
+                    bindingData();
+                    
+                    if (game.isFinished()) {
+                        ts = true;
+                        showResult();
+                    }
+                    
+                    resetBocQuan();
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Số bạn vừa nhập chưa đúng, xin mời nhập lại!",
+                    "Lỗi",
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_Coc2_KeyPressed
 
     private void Coc1_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc1_KeyPressed
         // TODO add your handling code here:
@@ -284,11 +472,11 @@ public class Main extends javax.swing.JFrame {
             int number;
             try {
                 number = GetInt(num);
-                
+
                 if (number > game.getData(0)) {
                     JOptionPane.showMessageDialog(
-                        null, 
-                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!", 
+                        null,
+                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!",
                         "Lỗi",
                         JOptionPane.WARNING_MESSAGE);
                 } else {
@@ -298,13 +486,37 @@ public class Main extends javax.swing.JFrame {
                     if (game.getData(0) == 0) {
                         coc1TF.disable();
                     }
+                    
+                    if (game.isFinished()) {
+                        ts = false;
+                        showResult();
+                        return;
+                    }
+                    
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(500);
+                    } catch (InterruptedException ex) {
+                        
+                    }
+                    
+                    // Computer's turn
+                    com.process();
+                    ComputerSay();
+                    
+                    bindingData();
+                    resetBocQuan();
+                    
+                    if (game.isFinished()) {
+                        ts = true;
+                        showResult();
+                    }
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(
-                        null, 
-                        "Số bạn vừa nhập chưa đúng, xin mời nhập lại!", 
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
+                    null,
+                    "Số bạn vừa nhập chưa đúng, xin mời nhập lại!",
+                    "Lỗi",
+                    JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_Coc1_KeyPressed
@@ -318,70 +530,6 @@ public class Main extends javax.swing.JFrame {
         about.setTitle("About");
         about.setVisible(true);
     }//GEN-LAST:event_aboutBTActionPerformed
-
-    private void Coc2_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc2_KeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String num = coc2TF.getText().trim();
-            int number;
-            try {
-                number = GetInt(num);
-                
-                if (number > game.getData(1)) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!", 
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                } else {
-                    game.turn = true;
-                    game.userEnter(1, number);
-                    coc2LB.setText(game.getData(1).toString());
-                    if (game.getData(1) == 0) {
-                        coc2TF.disable();
-                    }
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "Số bạn vừa nhập chưa đúng, xin mời nhập lại!", 
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_Coc2_KeyPressed
-
-    private void Coc3_KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Coc3_KeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String num = coc3TF.getText().trim();
-            int number;
-            try {
-                number = GetInt(num);
-                
-                if (number > game.getData(2)) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Số bạn vừa nhập lớn hơn tổng số quân.\nXin mời nhập lại!", 
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-                } else {
-                    game.turn = true;
-                    game.userEnter(2, number);
-                    coc3LB.setText(game.getData(2).toString());
-                    if (game.getData(2) == 0) {
-                        coc3TF.disable();
-                    }
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(
-                        null, 
-                        "Số bạn vừa nhập chưa đúng, xin mời nhập lại!", 
-                        "Lỗi",
-                        JOptionPane.WARNING_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_Coc3_KeyPressed
 
     /**
      * @param args the command line arguments
@@ -419,19 +567,24 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aboutBT;
     private javax.swing.JButton cancelBT;
+    private javax.swing.JLabel clockLB;
     private javax.swing.JLabel coc1LB;
     private javax.swing.JTextField coc1TF;
     private javax.swing.JLabel coc2LB;
     private javax.swing.JTextField coc2TF;
     private javax.swing.JLabel coc3LB;
     private javax.swing.JTextField coc3TF;
+    private javax.swing.JTextArea comsayTA;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton startBT;
+    private javax.swing.JLabel tysoLB;
     // End of variables declaration//GEN-END:variables
 
     private void bindingData() {
@@ -455,4 +608,54 @@ public class Main extends javax.swing.JFrame {
     private int GetInt(String num) throws NumberFormatException {
         return Integer.parseInt(num);
     }
+
+    private void ComputerSay() {
+        calendar = Calendar.getInstance();
+        mess.append(dateFormat.format(calendar.getTime()));
+        mess.append(": ");
+        mess.append(com.say());
+        comsayTA.setText(mess.toString());
+    }
+
+    private void resetBocQuan() {
+        coc1TF.setText("0");
+        coc2TF.setText("0");
+        coc3TF.setText("0");
+    }
+
+    private void showResult() {
+        result = new Result(this, true, ts);
+        
+        result.setLocationRelativeTo(null);
+        result.setVisible(true);
+        
+        if (result.isNewGame) {
+            game.initGame();
+            bindingData();
+            enableAll();
+            refresh();
+        } else {
+            this.dispose();
+        }
+        
+        if (ts) {
+            tysoCom++;
+        } else tysoBan++;
+        
+        tysoLB.setText(tysoCom + " - " + tysoBan);
+    }
+
+    private void refresh() {
+        coc1TF.updateUI();
+        coc2TF.updateUI();
+        coc3TF.updateUI();
+        mess = new StringBuffer();
+        comsayTA.setText("");
+    }
+
+    private void setTyso() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }

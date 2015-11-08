@@ -25,6 +25,8 @@ public class NIMGame {
     
     public boolean started = false;
     
+    private Random rand = new Random();
+    
     public NIMGame() {
         coc = new int[MAXN];
         for (int i = 0; i < MAXN; i++) {
@@ -35,10 +37,12 @@ public class NIMGame {
     }
     
     public void initGame() {
-        Random rand = new Random();
         
         for (int i = 0; i < MAXN; i++) {
-            coc[i] = rand.nextInt(MAXR);
+            while (true) {
+                coc[i] = rand.nextInt(MAXR);
+                if (coc[i] > 0) break;
+            }
         }
         turn = false;
         finished = false;
@@ -46,6 +50,7 @@ public class NIMGame {
     }
     
     private void updateStatus() {
+        status = 0;
         for (int i = 0; i < MAXN; i++) {
             status ^= coc[i];
         }
@@ -66,15 +71,15 @@ public class NIMGame {
             }
         }
         
-        for (int i = 0; i < MAXN; i++) {
-            if (coc[i] > 0) {
-                return i;
-            }
+        int res;
+        while (true) {
+            res = rand.nextInt(MAXN);
+            if (coc[res] > 0) break;
         }
-        return 0;
+        return res;
     }
     
-    private void pick() {
+    public void pick() {
         int index = getCoc();
         StringBuffer sb = new StringBuffer();
         
@@ -83,19 +88,20 @@ public class NIMGame {
             sb.append(index + 1);
             sb.append(", ");
             sb.append(1);
-            sb.append(" quân.");
+            sb.append(" quân.\n");
             
             message = sb.toString();
             coc[index]--;
         } else {
-            int x = coc[index] - (coc[index] ^ status);
-            coc[index] -= x;
+            int x = coc[index] ^ status;
+            int q = coc[index] - x;
+            coc[index] = x;
             
             sb.append("Tôi lấy cọc ");
             sb.append(index + 1);
             sb.append(", ");
-            sb.append(x);
-            sb.append(" quân.");
+            sb.append(q);
+            sb.append(" quân.\n");
             
             message = sb.toString();
         }
@@ -111,5 +117,15 @@ public class NIMGame {
     
     public void userEnter(int c, int number) {
         coc[c] -= number;
+    }
+    
+    public boolean isFinished() {
+        int res = 0;
+        
+        for (int i = 0; i < MAXN; i++) {
+            res |= coc[i];
+        }
+        
+        return res == 0;
     }
 }
